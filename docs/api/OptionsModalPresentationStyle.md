@@ -7,4 +7,4 @@
 - overCurrentContext
 - overFullScreen
 - pageSheet
-- popover
+- popOver

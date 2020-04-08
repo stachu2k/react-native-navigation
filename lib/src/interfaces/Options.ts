@@ -119,7 +119,7 @@ export enum OptionsModalPresentationStyle {
   overFullScreen = 'overFullScreen',
   overCurrentContext = 'overCurrentContext',
   currentContext = 'currentContext',
-  popover = 'popover',
+  popOver = 'popOver',
   fullScreen = 'fullScreen',
   none = 'none'
 }
