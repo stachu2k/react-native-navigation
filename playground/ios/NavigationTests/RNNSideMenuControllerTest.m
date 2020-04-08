@@ -16,12 +16,9 @@
 - (void)setUp {
     [super setUp];
 	_creator = [[RNNTestRootViewCreator alloc] init];
-	_leftVC = [[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:[RNNBasePresenter new] eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeLeft];
-	[_leftVC.presenter bindViewController:_leftVC];
-	_rightVC = [[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:[RNNBasePresenter new] eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeRight];
-	[_rightVC.presenter bindViewController:_rightVC];
-	_centerVC =[[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:[RNNBasePresenter new] eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeCenter];
-	[_centerVC.presenter bindViewController:_centerVC];
+	_leftVC = [[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:nil eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeLeft];
+	_rightVC = [[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:nil eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeRight];
+	_centerVC =[[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:nil eventEmitter:nil childViewController:self.generateComponent type:RNNSideMenuChildTypeCenter];
 	self.uut = [[RNNSideMenuController alloc] initWithLayoutInfo:nil creator:nil childViewControllers:@[_leftVC, _centerVC, _rightVC] options:[RNNNavigationOptions emptyOptions] defaultOptions:nil presenter:[[RNNSideMenuPresenter alloc] initWithDefaultOptions:nil] eventEmitter:nil];
 }
 

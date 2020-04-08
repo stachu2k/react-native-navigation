@@ -130,6 +130,14 @@
 	}
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	return self.openedViewController.preferredStatusBarStyle;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return [self.presenter statusBarVisibile:self.navigationController resolvedOptions:self.resolveOptions];
+}
+
 - (UIViewController<RNNLayoutProtocol> *)getCurrentChild {
 	return self.openedViewController;
 }
@@ -153,24 +161,6 @@
         [options.sideMenu mergeOptions:self.center.resolveOptions.sideMenu];
     }
     return options;
-}
-
-# pragma mark - UIViewController overrides
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-    [self.presenter willMoveToParentViewController:parent];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return [self.presenter getStatusBarStyle];
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return [self.presenter getStatusBarVisibility];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return [self.presenter getOrientation];
 }
 
 @end

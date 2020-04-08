@@ -20,7 +20,6 @@
     self.eventEmitter = eventEmitter;
     self.presenter = presenter;
     [self.presenter bindViewController:self];
-    self.extendedLayoutIncludesOpaqueBars = YES;
     if ([self respondsToSelector:@selector(setViewControllers:)]) {
         [self performSelector:@selector(setViewControllers:) withObject:childViewControllers];
     }
@@ -50,6 +49,15 @@
 
 - (void)overrideOptions:(RNNNavigationOptions *)options {
 	[self.options overrideOptions:options];
+}
+
+- (BOOL)extendedLayoutIncludesOpaqueBars {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+	UIInterfaceOrientationMask interfaceOrientationMask = self.presenter ? [self.presenter getOrientation:[self resolveOptions]] : [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:[[UIApplication sharedApplication] keyWindow]];
+	return interfaceOrientationMask;
 }
 
 - (UINavigationController *)stack {
@@ -151,6 +159,13 @@
 - (void)componentDidDisappear {
     [self.presenter componentDidDisappear];
     [self.parentViewController componentDidDisappear];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+	if (parent) {
+		[self.presenter applyOptionsOnWillMoveToParentViewController:self.resolveOptions];
+        [self onChildAddToParent:self options:self.resolveOptions];
+	}
 }
 
 #pragma mark getters and setters to associated object

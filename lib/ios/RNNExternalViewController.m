@@ -30,22 +30,4 @@
 	[self readyForPresentation];
 }
 
-# pragma mark - UIViewController overrides
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-    [self.presenter willMoveToParentViewController:parent];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return [self.presenter getStatusBarStyle];
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return [self.presenter getStatusBarVisibility];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return [self.presenter getOrientation];
-}
-
 @end
