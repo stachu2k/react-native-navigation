@@ -2,19 +2,19 @@
 #import "DisplayLinkAnimator.h"
 
 @implementation TransitionDelegate {
-    RCTBridge* _bridge;
+    RCTUIManager* _uiManager;
     id <UIViewControllerContextTransitioning> _transitionContext;
     BOOL _animate;
 }
 
-- (instancetype)initWithBridge:(RCTBridge *)bridge {
+- (instancetype)initWithUIManager:(RCTUIManager *)uiManager {
     self = [super init];
-    _bridge = bridge;
+    _uiManager = uiManager;
+    [_uiManager.observerCoordinator addObserver:self];
     return self;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    [_bridge.uiManager.observerCoordinator addObserver:self];
     _animate = YES;
     _transitionContext = transitionContext;
     [self prepareTransitionContext:transitionContext];

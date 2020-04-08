@@ -7,8 +7,8 @@
     RNNScreenTransition* _screenTransition;
 }
 
-- (instancetype)initWithScreenTransition:(RNNScreenTransition *)screenTransition bridge:(RCTBridge *)bridge {
-    self = [super initWithBridge:bridge];
+- (instancetype)initWithScreenTransition:(RNNScreenTransition *)screenTransition uiManager:(RCTUIManager *)uiManager {
+    self = [super initWithUIManager:uiManager];
     _screenTransition = screenTransition;
     return self;
 }

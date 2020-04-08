@@ -5,7 +5,7 @@
 
 @interface TransitionDelegate : NSObject <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, RCTUIManagerObserver>
 
-- (instancetype)initWithBridge:(RCTBridge *)bridge;
+- (instancetype)initWithUIManager:(RCTUIManager *)uiManager;
 
 - (NSArray *)createTransitionsFromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC containerView:(UIView *)containerView;
 

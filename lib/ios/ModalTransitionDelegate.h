@@ -4,7 +4,7 @@
 
 @interface ModalTransitionDelegate : TransitionDelegate
 
-- (instancetype)initWithContentTransition:(TransitionOptions *)contentTransition bridge:(RCTBridge *)bridge;
+- (instancetype)initWithContentTransition:(TransitionOptions *)contentTransition uiManager:(RCTUIManager *)uiManager;
 
 @property (nonatomic, strong) TransitionOptions* contentTransitionOptions;
 
