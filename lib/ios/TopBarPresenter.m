@@ -16,7 +16,7 @@
     [self setTitleAttributes:options.title];
     [self setLargeTitleAttributes:options.largeTitle];
     [self showBorder:![options.noBorder getWithDefaultValue:NO]];
-    [self setBackButtonOptions:options.backButton];
+    [self setBackButtonOptions:[options.backButton.icon getWithDefaultValue:nil] withColor:[options.backButton.color getWithDefaultValue:nil] title:[options.backButton.title getWithDefaultValue:nil] showTitle:[options.backButton.showTitle getWithDefaultValue:YES] fontFamily:[options.backButton.fontFamily getWithDefaultValue:nil] fontSize:[options.backButton.fontSize getWithDefaultValue:nil]];
 }
 
 - (void)applyOptionsBeforePopping:(RNNTopBarOptions *)options {
@@ -48,7 +48,7 @@
     }
     
     if (options.backButton.hasValue) {
-        [self setBackButtonOptions:withDefault.backButton];
+        [self setBackButtonOptions:[withDefault.backButton.icon getWithDefaultValue:nil] withColor:[withDefault.backButton.color getWithDefaultValue:nil] title:[withDefault.backButton.title getWithDefaultValue:nil] showTitle:[withDefault.backButton.showTitle getWithDefaultValue:YES] fontFamily:[withDefault.backButton.fontFamily getWithDefaultValue:nil] fontSize:[options.backButton.fontSize getWithDefaultValue:nil]];
     }
 }
 
@@ -111,18 +111,8 @@
     }
 }
 
-- (void)setBackButtonOptions:(RNNBackButtonOptions *)backButtonOptions {
-    UIImage* icon = [backButtonOptions.icon getWithDefaultValue:nil];
-    UIColor* color = [backButtonOptions.color getWithDefaultValue:nil];
-    NSString* title = [backButtonOptions.title getWithDefaultValue:nil];
-    BOOL showTitle = [backButtonOptions.showTitle getWithDefaultValue:YES];
-    NSString* fontFamily = [backButtonOptions.fontFamily getWithDefaultValue:nil];
-    NSNumber* fontSize = [backButtonOptions.fontSize getWithDefaultValue:nil];
-    NSString* testID = [backButtonOptions.testID getWithDefaultValue:nil];
-    
+- (void)setBackButtonOptions:(UIImage *)icon withColor:(UIColor *)color title:(NSString *)title showTitle:(BOOL)showTitle fontFamily:(NSString *)fontFamily fontSize:(NSNumber *)fontSize {
 	UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    backItem.accessibilityIdentifier = testID;
-    
     NSArray* stackChildren = self.navigationController.viewControllers;
     icon = color
     ? [[icon withTintColor:color] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
