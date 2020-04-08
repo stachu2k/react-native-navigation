@@ -16,13 +16,9 @@
 - (void)setUp {
     [super setUp];
 	self.uut = [[RNNSideMenuPresenter alloc] init];
-	self.boundViewController = [OCMockObject partialMockForObject:[[RNNSideMenuController alloc] initWithLayoutInfo:nil creator:nil childViewControllers:@[[self createChildVC:RNNSideMenuChildTypeCenter]] options:nil defaultOptions:nil presenter:nil eventEmitter:nil]];
+	self.boundViewController = [OCMockObject partialMockForObject:[RNNSideMenuController new]];
     [self.uut bindViewController:self.boundViewController];
 	self.options = [[RNNNavigationOptions alloc] initEmptyOptions];
-}
-
-- (RNNSideMenuChildVC *)createChildVC:(RNNSideMenuChildType)type {
-	return [[RNNSideMenuChildVC alloc] initWithLayoutInfo:nil creator:nil options:nil defaultOptions:nil presenter:nil eventEmitter:nil childViewController:[UIViewController new] type:type];
 }
 
 - (void)testApplyOptionsShouldSetDefaultValues {
