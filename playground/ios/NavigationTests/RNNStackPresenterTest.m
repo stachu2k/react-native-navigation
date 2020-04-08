@@ -1,10 +1,9 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import <ReactNativeNavigation/RNNStackPresenter.h>
+#import "RNNStackPresenter.h"
 #import "UINavigationController+RNNOptions.h"
 #import "RNNStackController.h"
 #import "UIImage+Utils.h"
-#import "RNNComponentViewController+Utils.h"
 
 @interface RNNStackPresenterTest : XCTestCase
 
@@ -19,7 +18,7 @@
 - (void)setUp {
 	[super setUp];
 	self.uut = [[RNNStackPresenter alloc] init];
-	RNNStackController* stackController = [[RNNStackController alloc] initWithLayoutInfo:nil creator:nil options:[[RNNNavigationOptions alloc] initEmptyOptions] defaultOptions:nil presenter:self.uut eventEmitter:nil childViewControllers:@[[RNNComponentViewController createWithComponentId:@"component1"], [RNNComponentViewController createWithComponentId:@"component2"]]];
+	RNNStackController* stackController = [[RNNStackController alloc] initWithLayoutInfo:nil creator:nil options:[[RNNNavigationOptions alloc] initEmptyOptions] defaultOptions:nil presenter:self.uut eventEmitter:nil childViewControllers:@[[UIViewController new], [UIViewController new]]];
 	self.boundViewController = [OCMockObject partialMockForObject:stackController];
     [self.uut bindViewController:self.boundViewController];
 	self.options = [[RNNNavigationOptions alloc] initEmptyOptions];
@@ -42,7 +41,7 @@
 	_options.topBar.background.color = [[Color alloc] initWithValue:[UIColor redColor]];
 	
 	[self.uut applyOptionsBeforePopping:self.options];
-	XCTAssertTrue([_boundViewController.childViewControllers.lastObject.navigationItem.standardAppearance.backgroundColor isEqual:[UIColor redColor]]);
+	XCTAssertTrue([_boundViewController.navigationBar.standardAppearance.backgroundColor isEqual:[UIColor redColor]]);
 }
 
 - (void)testApplyOptionsShouldSetLargeTitleVisible {
@@ -99,7 +98,7 @@
 	self.options.topBar.backButton.icon = icon;
 	[self.uut applyOptions:self.options];
 	XCTAssertEqual(self.boundViewController.viewControllers.firstObject.navigationItem.backBarButtonItem.tintColor, UIColor.redColor);
-	XCTAssertTrue([self.boundViewController.viewControllers.lastObject.navigationItem.standardAppearance.backIndicatorImage isEqual:image]);
+	XCTAssertTrue([self.boundViewController.navigationBar.standardAppearance.backIndicatorImage isEqual:image]);
 }
 
 - (void)testBackgroundColor_validColor {

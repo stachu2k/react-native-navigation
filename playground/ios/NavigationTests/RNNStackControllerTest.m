@@ -137,8 +137,7 @@
 	[_vc1 overrideOptions:_options];
 	
 	[self.uut popViewControllerAnimated:NO];
-	[_vc1 viewWillAppear:YES];
-	XCTAssertEqual(_vc1.resolveOptions.topBar.background.color.get, self.uut.childViewControllers.lastObject.navigationItem.standardAppearance.backgroundColor);
+	XCTAssertEqual(_vc1.resolveOptions.topBar.background.color.get, self.uut.navigationBar.standardAppearance.backgroundColor);
 }
 
 - (void)testPopViewControllerSetDefaultTopBarBackgroundForPoppingViewController {

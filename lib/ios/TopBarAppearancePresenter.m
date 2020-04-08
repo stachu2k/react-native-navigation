@@ -1,25 +1,20 @@
 #import "TopBarAppearancePresenter.h"
 #import "RNNFontAttributesCreator.h"
-#import "UIViewController+LayoutProtocol.h"
 
 @interface TopBarAppearancePresenter ()
 
 @end
 
 
-@implementation TopBarAppearancePresenter
-
-- (void)applyOptions:(RNNTopBarOptions *)options {
-    [self setTranslucent:[options.background.translucent getWithDefaultValue:NO]];
-    [self setBackgroundColor:[options.background.color getWithDefaultValue:nil]];
-    [self setTitleAttributes:options.title];
-    [self setLargeTitleAttributes:options.largeTitle];
-    [self showBorder:![options.noBorder getWithDefaultValue:NO]];
-    [self setBackButtonOptions:options.backButton];
+@implementation TopBarAppearancePresenter {
+    UINavigationBarAppearance* _appearance;
 }
 
-- (void)applyOptionsBeforePopping:(RNNTopBarOptions *)options {
-    [self setBackgroundColor:[options.background.color getWithDefaultValue:nil]];
+- (instancetype)initWithNavigationController:(UINavigationController *)boundNavigationController {
+    self = [super initWithNavigationController:boundNavigationController];
+    _appearance = boundNavigationController.navigationBar.standardAppearance ?: [UINavigationBarAppearance new];
+    boundNavigationController.navigationBar.standardAppearance = _appearance;
+    return self;
 }
 
 - (void)setTranslucent:(BOOL)translucent {
@@ -33,23 +28,23 @@
 
 - (void)updateBackgroundAppearance {
     if (self.transparent) {
-        [self.getAppearance configureWithTransparentBackground];
+        [_appearance configureWithTransparentBackground];
     } else if (self.backgroundColor) {
-        [self.getAppearance setBackgroundColor:self.backgroundColor];
+        [_appearance setBackgroundColor:self.backgroundColor];
     } else if (self.translucent) {
-        [self.getAppearance configureWithDefaultBackground];
+        [_appearance configureWithDefaultBackground];
     } else {
-        [self.getAppearance configureWithOpaqueBackground];
+        [_appearance configureWithOpaqueBackground];
     }
 }
 
 - (void)showBorder:(BOOL)showBorder {
     UIColor* shadowColor = showBorder ? [[UINavigationBarAppearance new] shadowColor] : nil;
-    self.getAppearance.shadowColor = shadowColor;
+    _appearance.shadowColor = shadowColor;
 }
 
 - (void)setBackIndicatorImage:(UIImage *)image withColor:(UIColor *)color {
-    [self.getAppearance setBackIndicatorImage:image transitionMaskImage:image];
+    [_appearance setBackIndicatorImage:image transitionMaskImage:image];
 }
 
 - (void)setTitleAttributes:(RNNTitleOptions *)titleOptions {
@@ -58,7 +53,7 @@
     NSNumber* fontSize = [titleOptions.fontSize getWithDefaultValue:nil];
     UIColor* fontColor = [titleOptions.color getWithDefaultValue:nil];
     
-    self.getAppearance.titleTextAttributes = [RNNFontAttributesCreator createFromDictionary:self.getAppearance.titleTextAttributes fontFamily:fontFamily fontSize:fontSize defaultFontSize:nil fontWeight:fontWeight color:fontColor defaultColor:nil];
+    _appearance.titleTextAttributes = [RNNFontAttributesCreator createFromDictionary:_appearance.titleTextAttributes fontFamily:fontFamily fontSize:fontSize defaultFontSize:nil fontWeight:fontWeight color:fontColor defaultColor:nil];
 }
 
 - (void)setLargeTitleAttributes:(RNNLargeTitleOptions *)largeTitleOptions {
@@ -67,11 +62,7 @@
     NSNumber* fontSize = [largeTitleOptions.fontSize getWithDefaultValue:nil];
     UIColor* fontColor = [largeTitleOptions.color getWithDefaultValue:nil];
     
-    self.getAppearance.largeTitleTextAttributes = [RNNFontAttributesCreator createFromDictionary:self.getAppearance.largeTitleTextAttributes fontFamily:fontFamily fontSize:fontSize defaultFontSize:nil fontWeight:fontWeight color:fontColor defaultColor:nil];
-}
-
-- (UINavigationBarAppearance *)getAppearance {
-    return self.currentNavigationItem.standardAppearance;
+    _appearance.largeTitleTextAttributes = [RNNFontAttributesCreator createFromDictionary:_appearance.largeTitleTextAttributes fontFamily:fontFamily fontSize:fontSize defaultFontSize:nil fontWeight:fontWeight color:fontColor defaultColor:nil];
 }
 
 @end

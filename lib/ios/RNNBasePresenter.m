@@ -110,10 +110,6 @@
     }
 }
 
-- (UINavigationItem *)currentNavigationItem {
-    return self.boundViewController.getCurrentChild.navigationItem;
-}
-
 - (UIInterfaceOrientationMask)getOrientation:(RNNNavigationOptions *)options {
     return [options withDefault:[self defaultOptions]].layout.supportedOrientations;
 }
