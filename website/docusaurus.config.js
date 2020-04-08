@@ -19,8 +19,8 @@ module.exports = {
         src: 'img/logo.png',
       },
       links: [
-        {to: 'docs/before-you-start', label: 'Docs', position: 'left', activeBasePath: 'docs'},
-        {to: 'api/component', label: 'API', position: 'left', activeBasePath: 'api'},
+        {to: 'docs/installing', label: 'Docs', position: 'left'},
+        {to: 'docs/component-api', label: 'API', position: 'left'},
         {
           href: 'https://github.com/wix/react-native-navigation',
           label: 'GitHub',
@@ -77,10 +77,10 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/wix/react-native-navigation',
             },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/ReactNativeNav',
-            },
+            // {
+            //   label: 'Twitter',
+            //   href: 'https://twitter.com/docusaurus',
+            // },
           ],
         },
       ]
@@ -92,8 +92,6 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: 'docs',
-          path: 'docs',
           editUrl:
             'https://github.com/wix/react-native-navigation/edit/master/website/docs'
         },
@@ -102,20 +100,5 @@ module.exports = {
         },
       },
     ],
-    [
-      '@docusaurus/preset-classic',
-      {
-        docs: {
-          routeBasePath: 'api',
-          path: 'api',
-          sidebarPath: require.resolve('./sidebarsApi.js'),
-          editUrl:
-            'https://github.com/wix/react-native-navigation/edit/master/website/docs'
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      },
-    ]
   ],
 };
