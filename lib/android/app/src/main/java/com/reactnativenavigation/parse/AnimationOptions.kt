@@ -14,7 +14,6 @@ import com.reactnativenavigation.parse.params.Text
 import com.reactnativenavigation.parse.parsers.BoolParser
 import com.reactnativenavigation.parse.parsers.TextParser
 import com.reactnativenavigation.utils.CollectionUtils
-import com.reactnativenavigation.utils.CollectionUtils.forEach
 import org.json.JSONObject
 import java.util.*
 import kotlin.math.max
@@ -69,7 +68,7 @@ open class AnimationOptions(json: JSONObject?) {
         if (!hasAnimation()) return defaultAnimation
         val animationSet = AnimatorSet()
         val animators: MutableList<Animator> = ArrayList()
-        forEach(valueOptions) { options: ValueAnimationOptions -> animators.add(options.getAnimation(view)) }
+        CollectionUtils.forEach(valueOptions) { options: ValueAnimationOptions -> animators.add(options.getAnimation(view)) }
         animationSet.playTogether(animators)
         return animationSet
     }
