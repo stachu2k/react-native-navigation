@@ -3,25 +3,25 @@
 #import <React/RCTBridge.h>
 
 typedef void (^RNNTransitionCompletionBlock)(void);
-typedef void (^RNNTransitionWithComponentIdCompletionBlock)(NSString * _Nonnull componentId);
-typedef void (^RNNTransitionRejectionBlock)(NSString * _Nonnull code, NSString * _Nonnull message, NSError * _Nullable error);
+typedef void (^RNNTransitionWithComponentIdCompletionBlock)(NSString *componentId);
+typedef void (^RNNTransitionRejectionBlock)(NSString *code, NSString *message, NSError *error);
 
 @protocol RNNModalManagerDelegate <NSObject>
 
-- (void)dismissedModal:(UIViewController * _Nonnull)viewController;
-- (void)attemptedToDismissModal:(UIViewController * _Nonnull)viewController;
-- (void)dismissedMultipleModals:(NSArray * _Nonnull)viewControllers;
+- (void)dismissedModal:(UIViewController *)viewController;
+- (void)attemptedToDismissModal:(UIViewController *)viewController;
+- (void)dismissedMultipleModals:(NSArray *)viewControllers;
 
 @end
 
 @interface RNNModalManager : NSObject <UIAdaptivePresentationControllerDelegate>
 
-- (instancetype _Nullable)initWithBridge:(RCTBridge * _Nonnull)bridge;
+- (instancetype)initWithBridge:(RCTBridge *)bridge;
 
-@property (nonatomic, weak) id<RNNModalManagerDelegate> _Nullable delegate;
+@property (nonatomic, weak) id<RNNModalManagerDelegate> delegate;
 
-- (void)showModal:(UIViewController * _Nonnull)viewController animated:(BOOL)animated completion:(RNNTransitionWithComponentIdCompletionBlock _Nonnull)completion;
-- (void)dismissModal:(UIViewController * _Nonnull)viewController completion:(RNNTransitionCompletionBlock _Nonnull)completion;
+- (void)showModal:(UIViewController *)viewController animated:(BOOL)animated completion:(RNNTransitionWithComponentIdCompletionBlock)completion;
+- (void)dismissModal:(UIViewController *)viewController completion:(RNNTransitionCompletionBlock)completion;
 - (void)dismissAllModalsAnimated:(BOOL)animated completion:(void (^ __nullable)(void))completion;
 - (void)dismissAllModalsSynchronosly;
 

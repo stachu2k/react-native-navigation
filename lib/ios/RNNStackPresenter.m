@@ -76,6 +76,8 @@
 }
 
 - (void)applyOptionsBeforePopping:(RNNNavigationOptions *)options {
+    RNNNavigationOptions *withDefault = [options withDefault:[self defaultOptions]];
+    RNNStackController* navigationController = self.stackController;
     [_topBarPresenter applyOptionsBeforePopping:options.topBar];
 }
 
