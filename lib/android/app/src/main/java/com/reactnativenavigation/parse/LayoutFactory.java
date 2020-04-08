@@ -166,9 +166,7 @@ public class LayoutFactory {
     private ViewController createExternalComponent(LayoutNode node) {
         final ExternalComponent externalComponent = ExternalComponent.parse(node.data);
         return new ExternalComponentViewController(activity,
-                childRegistry,
                 node.id,
-                new Presenter(activity, defaultOptions),
                 externalComponent,
                 externalComponentCreators.get(externalComponent.name.get()),
                 reactInstanceManager,
