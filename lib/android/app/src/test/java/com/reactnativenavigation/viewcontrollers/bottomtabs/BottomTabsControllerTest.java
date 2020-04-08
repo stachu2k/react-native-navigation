@@ -6,7 +6,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.TestUtils;
 import com.reactnativenavigation.mocks.ImageLoaderMock;
@@ -14,7 +13,6 @@ import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Colour;
-import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.presentation.BottomTabPresenter;
@@ -45,7 +43,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 import static com.reactnativenavigation.TestUtils.hideBackButton;
-import static com.reactnativenavigation.utils.ObjectUtils.perform;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -77,9 +74,32 @@ public class BottomTabsControllerTest extends BaseTest {
     @Override
     public void beforeEach() {
         activity = newActivity();
+        bottomTabs = spy(new BottomTabs(activity) {
+            @Override
+            public void superCreateItems() {
+
+            }
+        });
         childRegistry = new ChildControllersRegistry();
         eventEmitter = Mockito.mock(EventEmitter.class);
-        prepareViewsForTests();
+
+        child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
+        child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
+        child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
+        child4 = spy(createStack());
+        child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
+        when(child5.handleBack(any())).thenReturn(true);
+        tabs = createTabs();
+        presenter = spy(new BottomTabsPresenter(tabs, new Options()));
+        bottomTabPresenter = spy(new BottomTabPresenter(activity, tabs, ImageLoaderMock.mock(), new Options()));
+        tabsAttacher = spy(new BottomTabsAttacher(tabs, presenter));
+        uut = createBottomTabs();
+
+        uut.setParentController(Mockito.mock(ParentController.class));
+        CoordinatorLayout parent = new CoordinatorLayout(activity);
+        parent.addView(uut.getView());
+        activity.setContentView(parent);
+
         StatusBarUtils.saveStatusBarHeight(63);
     }
 
@@ -88,22 +108,6 @@ public class BottomTabsControllerTest extends BaseTest {
         assertThat(uut.getView()).isInstanceOf(CoordinatorLayout.class);
         assertThat(uut.getView().getChildAt(0)).isInstanceOf(BottomTabs.class);
         assertThat(((CoordinatorLayout.LayoutParams) uut.getBottomTabs().getLayoutParams()).gravity).isEqualTo(Gravity.BOTTOM);
-    }
-
-    @Test
-    public void createView_tabsWithoutIconsAreAccepted() {
-        tabOptions.bottomTabOptions.icon = new NullText();
-        prepareViewsForTests();
-        assertThat(uut.getBottomTabs().getItemsCount()).isEqualTo(tabs.size());
-    }
-
-    @Test
-    public void createView_showTitlesWhenAllTabsDontHaveIcons() {
-        tabOptions.bottomTabOptions.icon = new NullText();
-        assertThat(tabOptions.bottomTabsOptions.titleDisplayMode.hasValue()).isFalse();
-        prepareViewsForTests();
-        presenter.applyOptions(Options.EMPTY);
-        assertThat(bottomTabs.getTitleState()).isEqualTo(AHBottomNavigation.TitleState.ALWAYS_SHOW);
     }
 
     @Test(expected = RuntimeException.class)
@@ -387,36 +391,6 @@ public class BottomTabsControllerTest extends BaseTest {
     public void destroy() {
         uut.destroy();
         verify(tabsAttacher).destroy();
-    }
-
-    private void prepareViewsForTests() {
-        perform(uut, ViewController::destroy);
-        bottomTabs = spy(new BottomTabs(activity) {
-            @Override
-            public void superCreateItems() {
-
-            }
-        });
-        createChildren();
-        tabs = createTabs();
-        presenter = spy(new BottomTabsPresenter(tabs, new Options()));
-        bottomTabPresenter = spy(new BottomTabPresenter(activity, tabs, ImageLoaderMock.mock(), new Options()));
-        tabsAttacher = spy(new BottomTabsAttacher(tabs, presenter));
-        uut = createBottomTabs();
-
-        uut.setParentController(Mockito.mock(ParentController.class));
-        CoordinatorLayout parent = new CoordinatorLayout(activity);
-        parent.addView(uut.getView());
-        activity.setContentView(parent);
-    }
-
-    private void createChildren() {
-        child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
-        child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
-        child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
-        child4 = spy(createStack());
-        child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
-        when(child5.handleBack(any())).thenReturn(true);
     }
 
     @NonNull

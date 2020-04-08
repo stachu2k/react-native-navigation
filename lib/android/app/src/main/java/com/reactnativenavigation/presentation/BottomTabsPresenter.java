@@ -13,8 +13,6 @@ import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabFinder;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.TabSelector;
 import com.reactnativenavigation.views.BottomTabs;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 import androidx.annotation.IntRange;
@@ -120,7 +118,7 @@ public class BottomTabsPresenter {
 
         bottomTabs.setLayoutDirection(options.layout.direction);
         bottomTabs.setPreferLargeIcons(options.bottomTabsOptions.preferLargeIcons.get(false));
-        bottomTabs.setTitleState(bottomTabsOptions.titleDisplayMode.get(getDefaultTitleState()));
+        bottomTabs.setTitleState(bottomTabsOptions.titleDisplayMode.get(TitleState.SHOW_WHEN_ACTIVE));
         bottomTabs.setBackgroundColor(bottomTabsOptions.backgroundColor.get(Color.WHITE));
         if (bottomTabsOptions.currentTabIndex.hasValue()) {
             int tabIndex = bottomTabsOptions.currentTabIndex.get();
@@ -148,14 +146,6 @@ public class BottomTabsPresenter {
         if (bottomTabsOptions.elevation.hasValue()) {
             bottomTabs.setUseElevation(true, bottomTabsOptions.elevation.get().floatValue());
         }
-    }
-
-    @NotNull
-    private TitleState getDefaultTitleState() {
-        for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            if (bottomTabs.getItem(i).hasIcon()) return TitleState.SHOW_WHEN_ACTIVE;
-        }
-        return TitleState.ALWAYS_SHOW;
     }
 
     public void applyBottomInset(int bottomInset) {
