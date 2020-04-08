@@ -44,11 +44,17 @@
 	XCTAssertTrue([_boundViewController.navigationBar.standardAppearance.backgroundColor isEqual:[UIColor redColor]]);
 }
 
-- (void)testApplyOptionsShouldSetLargeTitleVisible {
+- (void)testApplyOptionsBeforePoppingShouldSetLargeTitleForPoppingViewController {
 	_options.topBar.largeTitle.visible = [[Bool alloc] initWithBOOL:YES];
 	
-	[self.uut applyOptions:self.options];
+	[self.uut applyOptionsBeforePopping:self.options];
 	XCTAssertTrue([[_boundViewController navigationBar] prefersLargeTitles]);
+}
+
+- (void)testApplyOptionsBeforePoppingShouldSetDefaultLargeTitleFalseForPoppingViewController {
+	_options.topBar.largeTitle.visible = nil;
+	[self.uut applyOptionsBeforePopping:self.options];
+	XCTAssertFalse([[_boundViewController navigationBar] prefersLargeTitles]);
 }
 
 - (void)testApplyOptions_shouldSetBackButtonOnBoundViewController_withTitle {
@@ -63,8 +69,7 @@
 	self.options.topBar.backButton.title = title;
 	self.options.topBar.backButton.showTitle = [[Bool alloc] initWithValue:@(0)];
 	[self.uut applyOptions:self.options];
-	NSLog(@"%@", self.boundViewController.viewControllers.firstObject.navigationItem.backBarButtonItem.title);
-	XCTAssertTrue([self.boundViewController.viewControllers.firstObject.navigationItem.backBarButtonItem.title isEqualToString:@""]);
+	XCTAssertNil(self.boundViewController.viewControllers.firstObject.navigationItem.backBarButtonItem.title);
 }
 
 - (void)testApplyOptions_shouldSetBackButtonOnBoundViewController_withDefaultValues {
