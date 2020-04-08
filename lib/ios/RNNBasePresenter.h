@@ -47,6 +47,4 @@ typedef void (^RNNReactViewReadyCompletionBlock)(void);
 
 - (BOOL)getStatusBarVisibility;
 
-- (BOOL)hidesBottomBarWhenPushed;
-
 @end

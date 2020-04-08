@@ -173,8 +173,4 @@
     return [self.presenter getOrientation];
 }
 
-- (BOOL)hidesBottomBarWhenPushed {
-    return [self.presenter hidesBottomBarWhenPushed];
-}
-
 @end
