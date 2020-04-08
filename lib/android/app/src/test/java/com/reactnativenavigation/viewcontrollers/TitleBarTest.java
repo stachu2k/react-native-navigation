@@ -125,15 +125,6 @@ public class TitleBarTest extends BaseTest {
     }
 
     @Test
-    public void setComponent_doesNothingIfComponentIsAlreadyAdded() {
-        View component = new View(activity);
-        uut.setComponent(component);
-
-        uut.setComponent(component);
-        verify(uut).addView(component);
-    }
-
-    @Test
     public void addView_overflowIsEnabledForButtonsContainer() {
         ActionMenuView buttonsContainer = mock(ActionMenuView.class);
         uut.addView(buttonsContainer);
@@ -150,7 +141,7 @@ public class TitleBarTest extends BaseTest {
         assertThat(uut.getTitle()).isNullOrEmpty();
         assertThat(uut.getMenu().size()).isZero();
         assertThat(uut.getNavigationIcon()).isNull();
-        assertThat(title.getParent()).isNull();
+        verify(uut).removeView(title);
     }
 
     @Test
