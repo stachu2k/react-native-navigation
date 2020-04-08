@@ -39,10 +39,6 @@
 	return [_presenter getStatusBarStyle:self.resolveOptions];
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return [self.presenter statusBarVisibile:self.navigationController resolvedOptions:self.resolveOptions];
-}
-
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
     [self prepareForPop];
 	return [super popViewControllerAnimated:animated];

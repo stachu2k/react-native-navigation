@@ -91,10 +91,6 @@
 	return [[self presenter] getStatusBarStyle:self.resolveOptions];
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return [self.presenter statusBarVisibile:self.navigationController resolvedOptions:self.resolveOptions];
-}
-
 #pragma mark UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
