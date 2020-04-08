@@ -84,8 +84,10 @@ public class ModalStack {
 
     public void dismissAllModals(ViewController root, Options mergeOptions, CommandListener listener) {
         if (modals.isEmpty()) {
+            listener.onError("Nothing to dismiss");
             return;
         }
+
         String topModalId = peek().getId();
         String topModalName = peek().getCurrentComponentName();
         int modalsDismissed = size();
