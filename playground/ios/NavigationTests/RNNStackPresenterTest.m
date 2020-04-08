@@ -42,7 +42,7 @@
 	_options.topBar.background.color = [[Color alloc] initWithValue:[UIColor redColor]];
 	
 	[self.uut applyOptionsBeforePopping:self.options];
-	XCTAssertFalse([_boundViewController.childViewControllers.lastObject.navigationItem.standardAppearance.backgroundColor isEqual:[UIColor redColor]]);
+	XCTAssertTrue([_boundViewController.childViewControllers.lastObject.navigationItem.standardAppearance.backgroundColor isEqual:[UIColor redColor]]);
 }
 
 - (void)testApplyOptionsShouldSetLargeTitleVisible {
