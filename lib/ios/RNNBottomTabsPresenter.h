@@ -2,6 +2,8 @@
 
 @interface RNNBottomTabsPresenter : RNNBasePresenter
 
+- (void)applyDotIndicator;
+
 - (void)setTabBarBackgroundColor:(UIColor *)backgroundColor;
 
 - (UITabBarController *)tabBarController;

@@ -8,7 +8,6 @@
 #import "RNNStackController.h"
 #import "RNNBottomTabsController.h"
 #import "RNNUIBarButtonItem.h"
-#import "RNNBottomTabsController+Helpers.h"
 
 
 @interface RNNComponentViewController (EmbedInTabBar)
@@ -167,12 +166,13 @@
 -(void)testTabBadge {
 	NSString* tabBadgeInput = @"5";
 	self.options.bottomTab.badge = [[Text alloc] initWithValue:tabBadgeInput];
+	__unused RNNBottomTabsController* vc = [[RNNBottomTabsController alloc] init];
 	NSMutableArray* controllers = [NSMutableArray new];
 	UITabBarItem* item = [[UITabBarItem alloc] initWithTitle:@"A Tab" image:nil tag:1];
 	[self.uut setTabBarItem:item];
 	[controllers addObject:self.uut];
-	__unused RNNBottomTabsController* vc = [RNNBottomTabsController createWithChildren:controllers];
-	[self.uut willMoveToParentViewController:vc];
+	[vc setViewControllers:controllers];
+	[self.uut viewWillAppear:false];
 	XCTAssertTrue([self.uut.tabBarItem.badgeValue isEqualToString:tabBadgeInput]);
 
 }

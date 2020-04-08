@@ -88,4 +88,16 @@
     return self.tabBarController.tabBar;
 }
 
+- (void)viewDidLayoutSubviews {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self applyDotIndicator];
+    });
+}
+
+- (void)applyDotIndicator {
+    [self.boundViewController forEachChild:^(UIViewController *child) {
+        [self applyDotIndicator:child];
+    }];
+}
+
 @end

@@ -8,7 +8,7 @@
 #import "RNNStackController.h"
 #import "RNNBottomTabsController.h"
 #import "RNNUIBarButtonItem.h"
-#import "RNNBottomTabsController+Helpers.h"
+
 
 @interface RNNComponentViewController (EmbedInTabBar)
 - (void)embedInTabBarController;
@@ -17,7 +17,7 @@
 @implementation RNNComponentViewController (EmbedInTabBar)
 
 - (void)embedInTabBarController {
-	RNNBottomTabsController* tabVC = [RNNBottomTabsController create];
+	RNNBottomTabsController* tabVC = [[RNNBottomTabsController alloc] init];
 	tabVC.viewControllers = @[self];
 	[self viewWillAppear:false];
 }
@@ -179,12 +179,13 @@
 - (void)testTabBadge {
 	NSString* tabBadgeInput = @"5";
 	self.options.bottomTab.badge = [[Text alloc] initWithValue:tabBadgeInput];
+	__unused RNNBottomTabsController* vc = [[RNNBottomTabsController alloc] init];
 	NSMutableArray* controllers = [NSMutableArray new];
 	UITabBarItem* item = [[UITabBarItem alloc] initWithTitle:@"A Tab" image:nil tag:1];
 	[self.uut setTabBarItem:item];
 	[controllers addObject:self.uut];
-	__unused RNNBottomTabsController* vc = [RNNBottomTabsController createWithChildren:controllers];
-	[self.uut willMoveToParentViewController:vc];
+	[vc setViewControllers:controllers];
+	[self.uut viewWillAppear:false];
 	XCTAssertTrue([self.uut.tabBarItem.badgeValue isEqualToString:tabBadgeInput]);
 
 }
@@ -370,7 +371,7 @@
 	NSArray* supportedOrientations = @[@"portrait"];
 	self.options.layout.orientation = supportedOrientations;
 	NSMutableArray* controllers = [[NSMutableArray alloc] initWithArray:@[self.uut]];
-    __unused RNNBottomTabsController* vc = [RNNBottomTabsController createWithChildren:controllers];
+    __unused RNNBottomTabsController* vc = [[RNNBottomTabsController alloc] initWithLayoutInfo:nil creator:nil options:[[RNNNavigationOptions alloc] initEmptyOptions] defaultOptions:nil presenter:[RNNComponentPresenter new] eventEmitter:nil childViewControllers:controllers];
 
 	[self.uut viewWillAppear:false];
 
@@ -382,7 +383,7 @@
 	NSArray* supportedOrientations = @[@"portrait", @"landscape"];
 	self.options.layout.orientation = supportedOrientations;
     NSMutableArray* controllers = [[NSMutableArray alloc] initWithArray:@[self.uut]];
-    __unused RNNBottomTabsController* vc = [RNNBottomTabsController createWithChildren:controllers];
+    __unused RNNBottomTabsController* vc = [[RNNBottomTabsController alloc] initWithLayoutInfo:nil creator:nil options:[[RNNNavigationOptions alloc] initEmptyOptions] defaultOptions:nil presenter:[RNNComponentPresenter new] eventEmitter:nil childViewControllers:controllers];
 
 	[self.uut viewWillAppear:false];
 
@@ -394,7 +395,7 @@
 	NSArray* supportedOrientations = @[@"all"];
 	self.options.layout.orientation = supportedOrientations;
 	NSMutableArray* controllers = [[NSMutableArray alloc] initWithArray:@[self.uut]];
-	__unused RNNBottomTabsController* vc = [RNNBottomTabsController createWithChildren:controllers];
+	__unused RNNBottomTabsController* vc = [[RNNBottomTabsController alloc] initWithLayoutInfo:nil creator:nil options:[[RNNNavigationOptions alloc] initEmptyOptions] defaultOptions:nil presenter:[RNNComponentPresenter new] eventEmitter:nil childViewControllers:controllers];
 
 	[self.uut viewWillAppear:false];
 
