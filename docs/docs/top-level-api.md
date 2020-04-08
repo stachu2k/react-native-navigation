@@ -61,10 +61,7 @@ Navigation.showOverlay({
     options: {
       overlay: {
         interceptTouchOutside: true
-      },
-      layout: {
-        componentBackgroundColor: 'transparent', // Use this if you want your background to be transparent.
-      },
+      }
     }
   }
 });
