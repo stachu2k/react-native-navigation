@@ -3,7 +3,6 @@
 #import "UIViewController+LayoutProtocol.h"
 #import "ModalTransitionDelegate.h"
 #import "ModalDismissTransitionDelegate.h"
-#import "RNNConvert.h"
 
 @interface RNNModalManager ()
 @property (nonatomic, strong) ModalTransitionDelegate* modalTransitionDelegate;
@@ -37,9 +36,6 @@
 	
 	UIViewController* topVC = [self topPresentedVC];
 	
-    viewController.modalPresentationStyle = [RNNConvert UIModalPresentationStyle:[viewController.resolveOptionsWithDefault.modalPresentationStyle getWithDefaultValue:@"default"]];
-    viewController.modalTransitionStyle = [RNNConvert UIModalTransitionStyle:[viewController.resolveOptionsWithDefault.modalTransitionStyle getWithDefaultValue:@"coverVertical"]];
-    
 	if (viewController.presentationController) {
 		viewController.presentationController.delegate = self;
 	}

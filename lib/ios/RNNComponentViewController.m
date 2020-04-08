@@ -1,4 +1,5 @@
 #import "RNNComponentViewController.h"
+#import "UIViewController+LayoutProtocol.h"
 
 @implementation RNNComponentViewController
 

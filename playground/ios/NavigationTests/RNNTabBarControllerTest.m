@@ -3,6 +3,7 @@
 #import <ReactNativeNavigation/RNNComponentViewController.h>
 #import "RNNStackController.h"
 #import <OCMock/OCMock.h>
+#import "RCTConvert+Modal.h"
 #import <ReactNativeNavigation/BottomTabPresenterCreator.h>
 #import "RNNBottomTabsController+Helpers.h"
 

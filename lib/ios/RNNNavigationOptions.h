@@ -43,8 +43,6 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 
 - (instancetype)initEmptyOptions;
 
-+ (instancetype)emptyOptions;
-
 - (RNNNavigationOptions *)withDefault:(RNNNavigationOptions *)defaultOptions;
 
 - (RNNNavigationOptions *)copy;

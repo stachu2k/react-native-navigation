@@ -4,7 +4,7 @@
 #import "RNNNavigationOptions.h"
 #import "RNNUIBarButtonItem.h"
 #import "RNNLayoutInfo.h"
-#import "UIViewController+LayoutProtocol.h"
+#import "RNNLayoutProtocol.h"
 #import "RNNComponentPresenter.h"
 
 typedef void (^PreviewCallback)(UIViewController *vc);

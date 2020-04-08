@@ -1,6 +1,7 @@
 #import "RNNComponentPresenter.h"
 #import "UIViewController+RNNOptions.h"
 #import "UITabBarController+RNNOptions.h"
+#import "RCTConvert+Modal.h"
 #import "RNNTitleViewHelper.h"
 #import "UIViewController+LayoutProtocol.h"
 #import "RNNReactTitleView.h"
@@ -97,6 +98,14 @@
 
 	if (options.backgroundImage.hasValue) {
 		[viewController setBackgroundImage:options.backgroundImage.get];
+	}
+	
+	if (options.modalPresentationStyle.hasValue) {
+		[viewController setModalPresentationStyle:[RCTConvert UIModalPresentationStyle:options.modalPresentationStyle.get]];
+	}
+	
+	if (options.modalTransitionStyle.hasValue) {
+		[viewController setModalTransitionStyle:[RCTConvert UIModalTransitionStyle:options.modalTransitionStyle.get]];
 	}
 	
 	if (options.topBar.searchBar.hasValue) {
