@@ -1,7 +1,7 @@
-#import "BottomTabsBasePresenter.h"
+#import "RNNBottomTabsPresenter.h"
 
 API_AVAILABLE(ios(13.0))
-@interface BottomTabsAppearancePresenter : BottomTabsBasePresenter
+@interface BottomTabsAppearancePresenter : RNNBottomTabsPresenter
 
 
 @end

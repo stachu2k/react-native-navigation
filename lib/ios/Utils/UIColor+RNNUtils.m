@@ -8,11 +8,6 @@
 @implementation UIColor (RNNUtils)
 
 #pragma mark Public
-
-- (BOOL)isTransparent {
-    return (CGColorGetAlpha(self.CGColor) == 0.0);
-}
-
 - (NSString *)toHex {
     const CGFloat *components = CGColorGetComponents([self CGColor]);
 

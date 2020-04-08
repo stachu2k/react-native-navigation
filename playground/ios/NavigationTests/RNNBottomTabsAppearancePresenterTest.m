@@ -33,7 +33,8 @@
 - (void)testApplyOptions_shouldSetDefaultEmptyOptions {
     RNNNavigationOptions *emptyOptions = [[RNNNavigationOptions alloc] initEmptyOptions];
     [[self.boundViewController expect] setTabBarTestID:nil];
-    [[(id)self.uut expect] applyBackgroundColor:nil translucent:NO];
+    [self.uut setTabBarBackgroundColor:nil];
+    [[self.boundViewController expect] setTabBarTranslucent:NO];
     [[self.boundViewController expect] setTabBarHideShadow:NO];
     [[self.boundViewController expect] setTabBarStyle:UIBarStyleDefault];
     [[self.boundViewController expect] setTabBarVisible:YES animated:NO];
@@ -51,7 +52,8 @@
     initialOptions.bottomTabs.barStyle = [[Text alloc] initWithValue:@"black"];
 
     [[self.boundViewController expect] setTabBarTestID:@"testID"];
-    [[(id)self.uut expect] applyBackgroundColor:nil translucent:[UIColor redColor]];
+    [self.uut setTabBarBackgroundColor:[UIColor redColor]];
+    [[self.boundViewController expect] setTabBarTranslucent:NO];
     [[self.boundViewController expect] setTabBarHideShadow:YES];
     [[self.boundViewController expect] setTabBarStyle:UIBarStyleBlack];
     [[self.boundViewController expect] setTabBarVisible:NO animated:NO];

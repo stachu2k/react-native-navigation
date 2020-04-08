@@ -1,7 +1,6 @@
 #import "TopBarPresenter.h"
 #import "UIImage+tint.h"
 #import "RNNFontAttributesCreator.h"
-#import "UIColor+RNNUtils.h"
 
 @implementation TopBarPresenter
 
@@ -149,7 +148,7 @@
 }
 
 - (BOOL)transparent {
-    return self.backgroundColor.isTransparent;
+    return (self.backgroundColor && CGColorGetAlpha(self.backgroundColor.CGColor) == 0.0);
 }
 
 @end
