@@ -5,11 +5,10 @@ const height = Math.round(Dimensions.get('window').height);
 const width = Math.round(Dimensions.get('window').width);
 console.log('guyca', `height: ${height} width: ${width}`);
 const {
-  useCustomAnimations,
   useSlowOpenScreenAnimations,
   useSlideAnimation
 } = require('../flags');
-const SHOW_DURATION = 250 * (useSlowOpenScreenAnimations ? 2.5 : 1);
+const SHOW_DURATION = 310 * 2.5;
 
 const setDefaultOptions = () => Navigation.setDefaultOptions({
   layout: {
@@ -27,8 +26,8 @@ const setDefaultOptions = () => Navigation.setDefaultOptions({
   animations: {
     ...useSlideAnimation ?
         slideAnimations :
-        useCustomAnimations ?
-          customAnimations :
+        useSlowOpenScreenAnimations ?
+          slowOpenScreenAnimations :
           {}
   },
   modalPresentationStyle: 'fullScreen'
@@ -66,7 +65,7 @@ const slideAnimations = {
   }
 }
 
-const customAnimations = {
+const slowOpenScreenAnimations = {
   showModal: {
     waitForRender: true,
     translationY: {
@@ -78,7 +77,7 @@ const customAnimations = {
     alpha: {
       from: 0.65,
       to: 1,
-      duration: SHOW_DURATION * 0.7,
+      duration: SHOW_DURATION * 0.5,
       interpolation: 'accelerate'
     }
   },
@@ -86,7 +85,7 @@ const customAnimations = {
     translationY: {
       from: 0,
       to: height,
-      duration: SHOW_DURATION * 0.9,
+      duration: SHOW_DURATION * 0.8,
     },
     
   },
@@ -94,16 +93,14 @@ const customAnimations = {
     waitForRender: true,
     content: {
       alpha: {
-        from: 0.65,
+        from: 0.6,
         to: 1,
-        duration: SHOW_DURATION * 0.7,
-        interpolation: 'accelerate'
+        duration: SHOW_DURATION,
       },
       translationY: {
         from: height * 0.3,
         to: 0,
         duration: SHOW_DURATION,
-        interpolation: 'decelerate'
       }
     }
   },
@@ -117,7 +114,7 @@ const customAnimations = {
       translationY: {
         from: 0,
         to: height * 0.7,
-        duration: SHOW_DURATION * 0.9,
+        duration: SHOW_DURATION,
       }
     }
   }
