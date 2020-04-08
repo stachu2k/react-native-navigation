@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -33,6 +32,7 @@ import java.util.List;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -48,14 +48,9 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     private View component;
     private float elevation = -1;
 
-    public int getRightButtonsCount() {
-        return titleBar.getRightButtonsCount();
-    }
-
     public TopBar(final Context context) {
         super(context);
         context.setTheme(R.style.TopBar);
-        setId(CompatUtils.generateViewId());
         collapsingBehavior = new TopBarCollapseBehavior(this);
         topTabs = new TopTabs(getContext());
         createLayout();
@@ -209,12 +204,20 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         titleBar.setBackButton(backButton);
     }
 
+    public void setLeftButtons(List<TitleBarButtonController> leftButtons) {
+        titleBar.setLeftButtons(leftButtons);
+    }
+
     public void clearLeftButtons() {
         titleBar.setLeftButtons(Collections.emptyList());
     }
 
+    public void setRightButtons(List<TitleBarButtonController> rightButtons) {
+        titleBar.setRightButtons(rightButtons);
+    }
+
     public void clearRightButtons() {
-        titleBar.clearRightButtons();
+        titleBar.setRightButtons(Collections.emptyList());
     }
 
     public void setElevation(Double elevation) {
@@ -231,16 +234,8 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         }
     }
 
-    public TitleBar getTitleBar() {
+    public Toolbar getTitleBar() {
         return titleBar;
-    }
-
-    public List<MenuItem> getRightButtons() {
-        return titleBar.getRightButtons();
-    }
-
-    public MenuItem getRightButton(int index) {
-        return titleBar.getRightButton(getRightButtonsCount() - index - 1);
     }
 
     public void initTopTabs(ViewPager viewPager) {
@@ -288,17 +283,5 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     public void setLayoutDirection(LayoutDirection direction) {
         titleBar.setLayoutDirection(direction.get());
-    }
-
-    public void removeRightButton(TitleBarButtonController button) {
-        removeRightButton(button.getButtonIntId());
-    }
-
-    public void removeRightButton(int buttonId) {
-        titleBar.removeRightButton(buttonId);
-    }
-
-    public boolean containsRightButton(TitleBarButtonController button) {
-        return titleBar.containsRightButton(button);
     }
 }

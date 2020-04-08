@@ -3,9 +3,9 @@ package com.reactnativenavigation.views.titlebar;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.parse.Component;
+import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 
-public class TitleBarButtonCreator {
+public class TitleBarButtonCreator implements ReactViewCreator {
 
     private ReactInstanceManager instanceManager;
 
@@ -13,7 +13,8 @@ public class TitleBarButtonCreator {
         this.instanceManager = instanceManager;
 	}
 
-	public TitleBarReactButtonView create(Activity activity, Component component) {
-        return new TitleBarReactButtonView(activity, instanceManager, component);
+	@Override
+	public TitleBarReactButtonView create(Activity activity, String componentId, String componentName) {
+        return new TitleBarReactButtonView(activity, instanceManager, componentId, componentName);
     }
 }

@@ -21,30 +21,25 @@ import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.button.IconResolver;
 import com.reactnativenavigation.viewcontrollers.viewcontrolleroverlay.ViewControllerOverlay;
-import com.reactnativenavigation.views.titlebar.TitleBar;
-import com.reactnativenavigation.views.titlebar.TitleBarButtonCreator;
 import com.reactnativenavigation.views.titlebar.TitleBarReactButtonView;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
 public class TitleBarButtonController extends ViewController<TitleBarReactButtonView> implements MenuItem.OnMenuItemClickListener {
-    @Nullable private MenuItem menuItem;
-
     public interface OnClickListener {
         void onPress(String buttonId);
     }
 
     private final IconResolver navigationIconResolver;
-    private ButtonPresenter presenter;
+    private ButtonPresenter optionsPresenter;
     private final Button button;
-    private final TitleBarButtonCreator viewCreator;
+    private final ReactViewCreator viewCreator;
     private TitleBarButtonController.OnClickListener onPressListener;
     private Drawable icon;
 
@@ -57,19 +52,15 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
         return button.instanceId;
     }
 
-    public int getButtonIntId() {
-        return button.getIntId();
-    }
-
     public TitleBarButtonController(Activity activity,
                                     IconResolver navigationIconResolver,
-                                    ButtonPresenter presenter,
+                                    ButtonPresenter optionsPresenter,
                                     Button button,
-                                    TitleBarButtonCreator viewCreator,
+                                    ReactViewCreator viewCreator,
                                     OnClickListener onClickListener) {
         super(activity, button.id, new YellowBoxDelegate(), new Options(), new ViewControllerOverlay(activity));
         this.navigationIconResolver = navigationIconResolver;
-        this.presenter = presenter;
+        this.optionsPresenter = optionsPresenter;
         this.button = button;
         this.viewCreator = viewCreator;
         this.onPressListener = onClickListener;
@@ -105,7 +96,7 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
     @NonNull
     @Override
     protected TitleBarReactButtonView createView() {
-        view = viewCreator.create(getActivity(), button.component);
+        view = (TitleBarReactButtonView) viewCreator.create(getActivity(), button.component.componentId.get(), button.component.name.get());
         return (TitleBarReactButtonView) view.asView();
     }
 
@@ -113,12 +104,6 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
     public boolean onMenuItemClick(MenuItem item) {
         onPressListener.onPress(button.id);
         return true;
-    }
-
-    public boolean equals(TitleBarButtonController other) {
-        if (other == this) return true;
-        if (!other.getId().equals(getId())) return false;
-        return button.equals(other.button);
     }
 
     public void applyNavigationIcon(Toolbar toolbar) {
@@ -141,14 +126,8 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
         });
     }
 
-    public void addToMenu(TitleBar titleBar, int order) {
-        if (button.component.hasValue() && titleBar.containsRightButton(menuItem, order)) return;
-        titleBar.getMenu().removeItem(button.getIntId());
-        menuItem = titleBar.getMenu().add(Menu.NONE, button.getIntId(), order, presenter.getStyledText());
-        applyButtonOptions(titleBar, menuItem);
-    }
-
-    private void applyButtonOptions(TitleBar titleBar, MenuItem menuItem) {
+    public void addToMenu(Toolbar toolbar, int position) {
+        MenuItem menuItem = toolbar.getMenu().add(Menu.NONE, position, position, button.text.get(""));
         if (button.showAsAction.hasValue()) menuItem.setShowAsAction(button.showAsAction.get());
         menuItem.setEnabled(button.enabled.isTrueOrUndefined());
         menuItem.setOnMenuItemClickListener(this);
@@ -166,9 +145,13 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
                         menuItem.setIcon(icon);
                     }
                 });
+            } else {
+                optionsPresenter.setTextColor();
+                if (button.fontSize.hasValue()) optionsPresenter.setFontSize(menuItem);
+                optionsPresenter.setTypeFace(button.fontFamily);
             }
         }
-        setTestId(titleBar, button.testId);
+        setTestId(toolbar, button.testId);
     }
 
     private void loadIcon(ImageLoader.ImagesLoadingListener callback) {
@@ -178,9 +161,9 @@ public class TitleBarButtonController extends ViewController<TitleBarReactButton
     private void setIconColor(Drawable icon) {
         if (button.disableIconTint.isTrue()) return;
         if (button.enabled.isTrueOrUndefined() && button.color.hasValue()) {
-            presenter.tint(icon, button.color.get());
+            optionsPresenter.tint(icon, button.color.get());
         } else if (button.enabled.isFalse()) {
-            presenter.tint(icon, button.disabledColor.get(Color.LTGRAY));
+            optionsPresenter.tint(icon, button.disabledColor.get(Color.LTGRAY));
         }
     }
 
