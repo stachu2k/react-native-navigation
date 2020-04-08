@@ -2,7 +2,6 @@ package com.reactnativenavigation.viewcontrollers.modal;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.reactnativenavigation.anim.ModalAnimator;
@@ -47,7 +46,6 @@ public class ModalPresenter {
 
         Options options = toAdd.resolveCurrentOptions(defaultOptions);
         toAdd.setWaitForRender(options.animations.showModal.waitForRender);
-        modalsLayout.setVisibility(View.VISIBLE);
         modalsLayout.addView(toAdd.getView(), matchParentLP());
 
         if (options.animations.showModal.enabled.isTrueOrUndefined()) {
@@ -109,10 +107,5 @@ public class ModalPresenter {
     private void onDismissEnd(ViewController toDismiss, CommandListener listener) {
         listener.onSuccess(toDismiss.getId());
         toDismiss.destroy();
-        if (isEmpty()) modalsLayout.setVisibility(View.GONE);
-    }
-
-    private boolean isEmpty() {
-        return modalsLayout.getChildCount() == 0;
     }
 }
