@@ -10,8 +10,10 @@
   React Native Navigation
 </h1>
 
-INFO: Fixes that has been applied in this fork:
+**INFO:** Fixes that has been applied to this fork:
+
 https://github.com/stachu2k/react-native-navigation/commit/d4aa537ad340e589b16187c457f75ec3f460ec40
+
 https://github.com/stachu2k/react-native-navigation/commit/09dfcbe119c12259ae2c85c0326524333a3d75f2
 
 React Native Navigation provides 100% native platform navigation on both iOS and Android for React Native apps. The JavaScript API is simple and cross-platform - just install it in your app and give your users the native feel they deserve. Ready to get started? Check out the [docs](https://wix.github.io/react-native-navigation/).
